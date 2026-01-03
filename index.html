@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Xác nhận ra khỏi đơn vị</title>
+<style>
+body{
+  font-family: Arial;
+  background:#f0f4f8;
+}
+.box{
+  max-width:400px;
+  margin:100px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+h2{text-align:center;color:#003366;}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border-radius:8px;
+  border:1px solid #1e90ff;
+}
+button{
+  background:#ff4500;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Xác nhận ra khỏi đơn vị</h2>
+<input id="cccd" placeholder="Nhập số CCCD">
+<button onclick="xacNhanRa()">Xác nhận ra</button>
+<p id="msg" style="text-align:center;margin-top:15px;"></p>
+</div>
+
+<script>
+function xacNhanRa(){
+  const cccd = document.getElementById("cccd").value;
+  const msg = document.getElementById("msg");
+
+  if(!cccd){
+    msg.innerHTML="Vui lòng nhập CCCD";
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbwYhobSkuIXAOgfdkj0EHVjeDNzgHqlE0Nm1ho1Sb0rfsEwr7d1tFQFp25wXtV0PL7qdw/exec",{
+    method:"POST",
+    body: JSON.stringify({
+      cccd: cccd,
+      trangthai: "Đã ra",
+      thoigianra: new Date().toLocaleString(),
+      action: "ra"
+    })
+  })
+  .then(()=>{
+    msg.innerHTML="✔ Xác nhận ra thành công";
+  })
+  .catch(()=>{
+    msg.innerHTML="❌ Lỗi, vui lòng báo cán bộ trực";
+  });
+}
+</script>
+
+</body>
+</html>
